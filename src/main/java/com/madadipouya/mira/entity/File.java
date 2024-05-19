@@ -1,12 +1,6 @@
 package com.madadipouya.mira.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,13 +23,24 @@ public class File {
     @Lob
     private byte[] content;
 
+    @Column(name = "path", nullable = false)
+    @NotBlank
+    @Size(min = 6, max = 1024)
+    private String path;
+
+    @Column(name = "url", nullable = false)
+    @NotBlank
+    private String url;
+
     protected File() {
 
     }
 
-    public File(String name, byte[] content) {
+    public File(String name, byte[] content, String path, String url) {
         this.name = name;
         this.content = content;
+        this.path = path;
+        this.url = url;
     }
 
     public long getId() {
@@ -60,5 +65,21 @@ public class File {
 
     public void setContent(byte[] content) {
         this.content = content;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }
