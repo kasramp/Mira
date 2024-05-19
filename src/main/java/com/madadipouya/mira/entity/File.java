@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+
 @Entity
 @Table(name = "files")
 public class File {
@@ -25,12 +28,15 @@ public class File {
 
     @Column(name = "path", nullable = false)
     @NotBlank
-    @Size(min = 6, max = 1024)
+    @Size(min = 8, max = 1024)
     private String path;
 
     @Column(name = "url", nullable = false)
     @NotBlank
     private String url;
+
+    @Column(name = "created_on", nullable = false)
+    private ZonedDateTime createdOn;
 
     protected File() {
 
@@ -41,6 +47,7 @@ public class File {
         this.content = content;
         this.path = path;
         this.url = url;
+        this.createdOn = ZonedDateTime.now(ZoneOffset.UTC);
     }
 
     public long getId() {
