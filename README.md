@@ -7,3 +7,9 @@ Easy and fast file sharing from command line
 ```bash
 $ ./mvnw spring-boot:run
 ```
+
+## File upload
+
+```bash
+$ curl -F "file=@file.txt" http://localhost:8080/
+```
