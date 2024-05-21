@@ -1,5 +1,5 @@
 const codeBox = document.querySelector('.code-box');
-const tooltip = document.querySelector('.tooltip'); // Get the tooltip element
+const tooltip = document.querySelector('.tooltip');
 
 codeBox.addEventListener('click', copyToClipboard);
 
@@ -28,23 +28,32 @@ uploadLink.addEventListener('click', function(event) {
 
 fileInput.addEventListener('change', function(event) {
   const files = document.getElementById('file-input').files;
+  const fileList = document.getElementById('file-list');
+  fileList.innerHTML = '';
+  const contentSeparator = document.querySelector('.content-separator');
+  contentSeparator.classList.remove('hidden');
   for (const file of files) {
     const formData = new FormData();
+    const listItem = document.createElement('li');
     formData.append('file', file);
     fetch('/', {
       method: 'POST',
       body: formData
     })
     .then(response => {
-      if (response.ok) {
-        alert('File uploaded successfully!');
-        // Handle successful upload response (optional)
-      } else {
-        alert('Upload failed. Please try again.');
-      }
-    })
-    .catch(error => {
-      alert('Error uploading file: ' + error);
+      response.json().then(payload => {
+        if (response.ok) {
+          const downloadLink = document.createElement('a');
+          downloadLink.textContent = payload.url;
+          downloadLink.href = payload.url;
+          listItem.appendChild(downloadLink);
+        } else {
+          listItem.textContent = `file.name [failed]`;
+        }
+      })
+    }).catch(error => {
+      listItem.textContent = `file.name [failed]`;
     });
+    fileList.appendChild(listItem);
   }
 });
