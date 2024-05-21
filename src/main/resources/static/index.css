@@ -1,0 +1,67 @@
+body {
+  font-family: Consolas, monospace;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+p {
+  max-width: 700px; /* Adjust for larger screens */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 1rem; /* Use rem for font size */
+}
+
+@media (max-width: 768px) {
+  p {
+    max-width: 100%;
+    text-align: center;
+  }
+  .code-box {
+    font-size: calc(1vw + 0.8rem); /* Adjust font size based on viewport and base size */
+    max-width: 100%;
+  }
+}
+
+.header {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+.code-box {
+  margin-top: 30px;
+  background-color: #333;
+  color: #fff;
+  padding: 20px; /* Adjust for larger screens */
+  font-size: 15px;
+  border-radius: 5px;
+  overflow: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  margin-bottom: 0px;
+}
+
+.tooltip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0px;
+  padding-right: 5px;
+  opacity: 0; /* Initially hide the tooltip */
+  font-size: 12px; /* Small font size for the tooltip */
+  transition: opacity 0.5s ease-in-out; /* Smooth opacity transition */
+}
+
+.tooltip.copied {
+  opacity: 1; /* Show tooltip when code box has 'copied' class */
+}
+
+.code-box-container {
+  padding-bottom: 20px;
+}
