@@ -4,6 +4,7 @@ import com.madadipouya.mira.controller.response.FileResponse;
 import com.madadipouya.mira.exception.FileNotFoundException;
 import com.madadipouya.mira.service.FileService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +17,14 @@ import static com.madadipouya.mira.util.UrlUtil.getBaseUrl;
 @RequestMapping()
 public class FileController {
 
+    private static final String CURL_RESPONSE_TEMPLATE = """
+            =========================
+            
+            %s
+                        
+            =========================
+            """;
+
     private final FileService fileService;
 
     public FileController(FileService fileService) {
@@ -23,8 +32,9 @@ public class FileController {
     }
 
     @PostMapping
-    public ResponseEntity<FileResponse> uploadFile(@RequestPart("file") MultipartFile file, HttpServletRequest request) throws IOException {
-        return ResponseEntity.ok(new FileResponse(fileService.storeFile(file, getBaseUrl(request))));
+    public ResponseEntity<?> uploadFile(@RequestPart("file") MultipartFile file, @RequestHeader(value = "User-Agent") String userAgent, HttpServletRequest request) throws IOException {
+        FileResponse response = new FileResponse(fileService.storeFile(file, getBaseUrl(request)));
+        return (StringUtils.contains(userAgent, "curl")) ? ResponseEntity.ok(CURL_RESPONSE_TEMPLATE.formatted(response.getCommand())) : ResponseEntity.ok(response);
     }
 
     @GetMapping("/{path}/{fileName}")
