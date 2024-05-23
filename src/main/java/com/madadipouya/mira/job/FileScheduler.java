@@ -23,7 +23,7 @@ public class FileScheduler {
     }
 
     // Run every 5 minutes
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0/5 * * * ?")
     protected void deleteFilesOlderThanOneDay() {
         ZonedDateTime yesterdayDateTime = getYesterdayDateTime();
         logger.info("Start removing files older than: {}", yesterdayDateTime);
