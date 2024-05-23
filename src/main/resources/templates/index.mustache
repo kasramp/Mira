@@ -7,17 +7,16 @@
     <link rel="stylesheet" href="/index.css">
 </head>
 <body>
-<header class="header">
-    <h1>Mira file upload</h1>
-</header>
 <div class="container">
-    <p><strong>Mira</strong> is an ephemeral file upload from command line. It is handy for uploading config files to transfer from one machine to another machine hassle-free. The files will be removed after 24h.</p>
+    <header class="header">
+        <h1>Mira file upload</h1>
+    </header>
+    <p><strong>Mira</strong> is an ephemeral file upload from the command line. It is handy for uploading config files to transfer from one server/machine to another hassle-free. The files will be removed after 24 hours.</p>
     <section class="code-box-container">
-        <pre class="code-box" data-clipboard-text>curl -F "file=@your_file" http://localhost:8080</pre>
-        </pre>
+        <pre class="code-box" data-clipboard-text>curl http://localhost:8080 -F "file=@your_file"</pre>
         <span class="tooltip">copied!</span>
     </section>
-    <p>Alternative you can upload via browser, <a href="#" id="upload-link">choose file</a><input type="file" id="file-input" style="display: none;" multiple></p>
+    <p>Alternatively, you can upload via browser: <a href="#" id="upload-link">choose file</a><input type="file" id="file-input" style="display: none;" multiple></p>
     <hr class="content-separator hidden">
     <ul id="file-list"></ul>
 </div>
