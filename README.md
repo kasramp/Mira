@@ -11,5 +11,5 @@ $ ./mvnw spring-boot:run
 ## File upload
 
 ```bash
-$ curl -F "file=@your_file" http://localhost:8080/
+$ curl http://localhost:8080 -F "file=@your_file"
 ```
