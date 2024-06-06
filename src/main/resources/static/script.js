@@ -21,12 +21,12 @@ function copyToClipboard() {
 const uploadLink = document.getElementById('upload-link');
 const fileInput = document.getElementById('file-input');
 
-uploadLink.addEventListener('click', function(event) {
+uploadLink.addEventListener('click', function (event) {
   event.preventDefault();
   fileInput.click();
 });
 
-fileInput.addEventListener('change', function(event) {
+fileInput.addEventListener('change', function (event) {
   const files = document.getElementById('file-input').files;
   const fileList = document.getElementById('file-list');
   fileList.innerHTML = '';
@@ -39,20 +39,19 @@ fileInput.addEventListener('change', function(event) {
     fetch('/', {
       method: 'POST',
       body: formData
-    })
-    .then(response => {
-      response.json().then(payload => {
-        if (response.ok) {
+    }).then(response => {
+      if (response.ok) {
+        response.json().then(payload => {
           const downloadLink = document.createElement('a');
           downloadLink.textContent = payload.url;
           downloadLink.href = payload.url;
           listItem.appendChild(downloadLink);
-        } else {
-          listItem.textContent = `file.name [failed]`;
-        }
-      })
+        })
+      } else {
+        listItem.textContent = `${file.name} [failed]`;
+      }
     }).catch(error => {
-      listItem.textContent = `file.name [failed]`;
+      listItem.textContent = `${file.name} [failed]`;
     });
     fileList.appendChild(listItem);
   }

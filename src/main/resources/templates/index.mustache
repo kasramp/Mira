@@ -11,7 +11,10 @@
     <header class="header">
         <h1>Mira file upload</h1>
     </header>
-    <p><strong>Mira</strong> is an ephemeral file upload from the command line. It is handy for uploading config files to transfer from one server/machine to another hassle-free. The files will be removed after 24 hours.</p>
+    <p><strong>Mira</strong> is an ephemeral file upload from the command line. It is handy for uploading config files
+        to transfer from one server/machine to another hassle-free. The files will be removed after 24 hours. At the
+        moment the maximum file size is: {{ maximumFileSize }}
+    </p>
     <section class="code-box-container">
         <pre class="code-box" data-clipboard-text>curl http://localhost:8080 -F "file=@your_file"</pre>
         <span class="tooltip">copied!</span>
