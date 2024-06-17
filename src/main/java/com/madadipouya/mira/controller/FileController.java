@@ -5,8 +5,7 @@ import com.madadipouya.mira.exception.FileNotFoundException;
 import com.madadipouya.mira.service.FileService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,7 +38,14 @@ public class FileController {
     }
 
     @GetMapping(value = "/{path}/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public @ResponseBody byte[] downloadFile(@PathVariable String path, @PathVariable String fileName) throws FileNotFoundException {
-        return fileService.downloadFile(path, fileName);
+    public ResponseEntity<byte[]> downloadFile(@PathVariable String path, @PathVariable String fileName) throws FileNotFoundException {
+        return new ResponseEntity<>(fileService.downloadFile(path, fileName), createContentDispositionHeader(fileName), HttpStatus.OK);
+    }
+
+    private HttpHeaders createContentDispositionHeader(String fileName) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDisposition(ContentDisposition.builder("attachment").filename(fileName).build());
+        return headers;
     }
 }
